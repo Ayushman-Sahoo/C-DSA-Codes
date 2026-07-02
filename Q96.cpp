@@ -1,0 +1,46 @@
+/*96. Unique Binary Search Trees
+Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+
+Example 1:
+Input: n = 3
+Output: 5
+Example 2:
+
+Input: n = 1
+Output: 1
+Constraints:
+
+1 <= n <= 19
+*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    int numTrees(int n) {
+        vector<int> dp(n + 1, 0);
+
+        dp[0] = 1;
+        dp[1] = 1;
+
+        for (int nodes = 2; nodes <= n; nodes++) {
+            for (int root = 1; root <= nodes; root++) {
+                dp[nodes] += dp[root - 1] * dp[nodes - root];
+            }
+        }
+
+        return dp[n];
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    Solution obj;
+    cout << obj.numTrees(n);
+
+    return 0;
+}
